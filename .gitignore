@@ -1,0 +1,13 @@
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Laravel (app is under src/)
+src/.env
+src/vendor/
+src/node_modules/
+src/storage/*.key
+src/public/storage
