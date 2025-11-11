@@ -166,7 +166,7 @@
                 </tr>
                 <tr>
                     <th scope="row">電話番号</th>
-                    <td>{{ $inputs['tel'] }}</td>
+                    <td>{{ $inputs['tel1'] }}-{{ $inputs['tel2'] }}-{{ $inputs['tel3'] }}</td>
                 </tr>
                 <tr>
                     <th scope="row">住所</th>
@@ -182,7 +182,7 @@
                 </tr>
                 <tr>
                     <th scope="row">お問い合わせ内容</th>
-                    <td>{!! nl2br(e($inputs['detail'])) !!}</td>
+                    <td>{!! nl2br(e($inputs['body'])) !!}</td>
                 </tr>
             </table>
         </div>

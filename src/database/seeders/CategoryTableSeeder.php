@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class CategoryTableSeeder extends Seeder
 {
@@ -14,12 +15,18 @@ class CategoryTableSeeder extends Seeder
      */
     public function run()
     {
+        Schema::disableForeignKeyConstraints();
+
+        DB::table('categories')->truncate();
+
+        Schema::enableForeignKeyConstraints();
+
         DB::table('categories')->insert([
-                ['content' => '資料請求'],
-                ['content' => '体験希望'],
-                ['content' => '入会希望'],
-                ['content' => '休会希望'],
-                ['content' => '退会希望'],
+            ['content' => '商品のお届けについて'],
+            ['content' => '商品の交換について'],
+            ['content' => '商品トラブル'],
+            ['content' => 'ショップへのお問い合わせ'],
+            ['content' => 'その他'],
         ]);
     }
 }

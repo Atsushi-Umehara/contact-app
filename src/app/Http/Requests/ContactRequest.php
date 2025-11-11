@@ -6,77 +6,76 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class ContactRequest extends FormRequest
 {
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
 
-    protected function prepareForValidation()
-    {
-        $tel = $this->input('tel');
-
-        if (!$tel) {
-            $t1 = (string) $this->input('tel1', '');
-            $t2 = (string) $this->input('tel2', '');
-            $t3 = (string) $this->input('tel3', '');
-            $tel = $t1.$t2.$t3;
-        }
-
-        if (function_exists('mb_convert_kana')) {
-            $tel = mb_convert_kana($tel, 'n');
-        }
-
-        $tel = preg_replace('/\D+/', '', $tel);
-
-        $this->merge([
-            'tel' => $tel,
-        ]);
-    }
-
-    public function rules()
+    public function rules(): array
     {
         return [
-            'last_name'   => ['required', 'string', 'max:8'],
-            'first_name'  => ['required', 'string', 'max:8'],
-            'gender' => ['required', 'in:1,2,3'],
-            'email'       => ['required', 'email', 'max:255'],
-            'tel'         => ['required', 'regex:/^\d{10,11}$/'],
-            'address'     => ['required', 'string', 'max:255'],
-            'building'    => ['nullable', 'string', 'max:255'],
-            'category_id' => ['required', 'exists:categories,id'],
-            'detail'      => ['required', 'string', 'max:120'],
 
-            'tel1'        => ['nullable', 'regex:/^\d{2,4}$/'],
-            'tel2'        => ['nullable', 'regex:/^\d{1,4}$/'],
-            'tel3'        => ['nullable', 'regex:/^\d{1,4}$/'],
+            'last_name'  => ['required','string'],
+            'first_name' => ['required','string'],
+
+            'gender'     => ['required'],
+
+            'email'      => ['required','email:filter'],
+
+            'tel1'       => ['required','digits:3'],
+            'tel2'       => ['required','digits:4'],
+            'tel3'       => ['required','digits:4'],
+
+            'address'    => ['required','string'],
+
+            'category_id'=> ['required','integer','exists:categories,id'],
+
+            'body'       => ['required','string','max:120'],
         ];
     }
 
-    public function attributes()
+    public function messages(): array
     {
         return [
-            'last_name'   => '姓',
-            'first_name'  => '名',
-            'gender'      => '性別',
-            'email'       => 'メールアドレス',
-            'tel'         => '電話番号',
-            'address'     => '住所',
-            'building'    => '建物名',
-            'category_id' => 'お問い合わせの種類',
-            'detail'      => 'お問い合わせ内容',
-            'tel1'        => '電話番号（市外局番/先頭）',
-            'tel2'        => '電話番号（中間）',
-            'tel3'        => '電話番号（末尾）',
+
+            'last_name.required'   => 'お名前（姓）を入力してください',
+            'first_name.required'  => 'お名前（名）を入力してください',
+            'gender.required'      => '性別を選択してください',
+            'email.required'       => 'メールアドレスを入力してください',
+            'tel1.required'        => '電話番号を入力してください',
+            'tel2.required'        => '電話番号を入力してください',
+            'tel3.required'        => '電話番号を入力してください',
+            'address.required'     => '住所を入力してください',
+            'category_id.required' => 'お問い合わせの種類を選択してください',
+            'body.required'        => 'お問い合わせ内容を入力してください',
+
+
+            'email.email'          => 'メールアドレスはメール形式で入力してください',
+
+            'tel1.digits'          => '電話番号は半角数字で「3桁-4桁-4桁」で入力してください',
+            'tel2.digits'          => '電話番号は半角数字で「3桁-4桁-4桁」で入力してください',
+            'tel3.digits'          => '電話番号は半角数字で「3桁-4桁-4桁」で入力してください',
+
+            'body.max'             => 'お問い合わせ内容は120文字以内で入力してください',
+
+            'category_id.integer'  => 'お問い合わせの種類を正しく選択してください',
+            'category_id.exists'   => 'お問い合わせの種類を正しく選択してください',
         ];
     }
 
-    public function messages()
+    public function attributes(): array
     {
         return [
-            'tel.regex'  => '電話番号はハイフンなしの半角数字10〜11桁で入力してください。',
-            'tel1.regex' => '電話番号（先頭）は2〜4桁の半角数字で入力してください。',
-            'tel2.regex' => '電話番号（中間）は1〜4桁の半角数字で入力してください。',
-            'tel3.regex' => '電話番号（末尾）は1〜4桁の半角数字で入力してください。',
+            'last_name'  => 'お名前（姓）',
+            'first_name' => 'お名前（名）',
+            'gender'     => '性別',
+            'email'      => 'メールアドレス',
+            'tel1'       => '電話番号(先頭3桁)',
+            'tel2'       => '電話番号(中間4桁)',
+            'tel3'       => '電話番号(末尾4桁)',
+            'address'    => '住所',
+            'category_id'=> 'お問い合わせの種類',
+            'body'       => 'お問い合わせの内容',
         ];
     }
 }
