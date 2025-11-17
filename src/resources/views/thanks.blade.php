@@ -3,49 +3,62 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Thanks | FashionablyLate</title>
+    <title>お問い合わせ完了 | FashionablyLate</title>
+
+    <!-- メタ情報（SEO・SNS用） -->
+    <meta name="description" content="FashionablyLate お問い合わせ完了ページ">
+    <meta property="og:title" content="お問い合わせありがとうございます">
+    <meta property="og:type" content="website">
 
     <style>
         /* ===============================
-        Base
+        Base Style
         =============================== */
-        body{
+        html, body{
+            height: 100%;
             margin: 0;
+            padding: 0;
             background: #fff9f6;
             color: #4b3f39;
             font-family: system-ui, -apple-system, "Segoe UI", Roboto,
                 "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
-            text-align: center;
-            padding-top: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         header{
+            width: 100%;
             text-align: center;
+            padding: 40px 0 20px;
             font-size: 28px;
-            margin-bottom: 40px;
             letter-spacing: .08em;
         }
 
         /* ===============================
-        Box
+        Center Box
         =============================== */
         .box{
             background: #fff;
-            margin: 0 auto;
-            padding: 40px;
+            width: 90%;
             max-width: 520px;
+            padding: 40px 32px;
             border-radius: 12px;
             box-shadow: 0 10px 20px rgba(0,0,0,.05);
+            text-align: center;
         }
 
         h1{
-            font-size: 24px;
+            margin-top: 0;
             margin-bottom: 20px;
+            font-size: 24px;
+            line-height: 1.5;
         }
 
         p{
             font-size: 16px;
-            line-height: 1.7;
+            line-height: 1.8;
+            margin-bottom: 32px;
         }
 
         /* ===============================
@@ -53,17 +66,31 @@
         =============================== */
         .btn{
             display: inline-block;
-            margin-top: 32px;
-            padding: 12px 28px;
+            padding: 12px 32px;
             background: #6a564c;
             color: #fff;
             border-radius: 8px;
             text-decoration: none;
             font-size: 15px;
+            letter-spacing: .05em;
+            transition: .2s;
         }
 
         .btn:hover{
-            opacity: .9;
+            filter: brightness(.95);
+        }
+
+        /* ===============================
+        Responsive
+        =============================== */
+        @media (max-width: 640px){
+            header{
+                font-size: 24px;
+                padding: 30px 0 16px;
+            }
+            .box{
+                padding: 32px 24px;
+            }
         }
     </style>
 </head>
@@ -73,9 +100,12 @@
 
     <div class="box">
         <h1>お問い合わせありがとうございました</h1>
-        <p>担当者より追ってご連絡させていただきます。</p>
+        <p>
+            内容を送信しました。<br>
+            担当者より追ってご連絡させていただきます。
+        </p>
 
-        <a class="btn" href="/">トップへ戻る</a>
+        <a class="btn" href="{{ route('contacts.index') }}">トップへ戻る</a>
     </div>
 </body>
 </html>

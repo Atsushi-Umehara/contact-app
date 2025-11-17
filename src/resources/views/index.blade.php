@@ -1,4 +1,3 @@
-<!-- resources/views/index.blade.php -->
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -171,7 +170,15 @@
     </style>
 </head>
 <body>
-    <header>FashionablyLate</header>
+    <header style="display:flex;justify-content:space-between;align-items:center;padding:24px 40px;">
+        <div style="font-size:24px;letter-spacing:.08em;">FashionablyLate</div>
+
+        <nav style="font-size:14px;display:flex;gap:12px;">
+            <a href="{{ route('login') }}">管理者ログイン</a>
+            <span style="color:#ccc;">|</span>
+            <a href="{{ route('register.form') }}">新規登録</a>
+        </nav>
+    </header>
     <main>
         <h1>Contact</h1>
         <form action="{{ route('contacts.confirm') }}" method="post">
