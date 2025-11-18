@@ -13,15 +13,12 @@ class AddTelColumnsToContactsTable extends Migration
      */
     public function up()
     {
-        Schema::table('contacts', function (Blueprint $table) {
-            $table->string('tel1', 5)->nullable();
-            $table->string('tel2', 5)->nullable();
-            $table->string('tel3', 5)->nullable();
-
-            if (Schema::hasColumn('contacts', 'tel')) {
-                $table->dropColumn('tel');
-            }
-        });
+        // 念のため、「もしまだ tel カラムがなければ追加する」
+        if (!Schema::hasColumn('contacts', 'tel')) {
+            Schema::table('contacts', function (Blueprint $table) {
+                $table->string('tel', 255)->after('email');
+            });
+        }
     }
 
     /**
@@ -31,9 +28,11 @@ class AddTelColumnsToContactsTable extends Migration
      */
     public function down()
     {
-        Schema::table('contacts', function (Blueprint $table) {
-            $table->string('tel')->nullable();
-            $table->dropColumn(['tel1','tel2','tel3']);
-        });
+        // ロールバック時に tel カラムを消す（存在する場合のみ）
+        if (Schema::hasColumn('contacts', 'tel')) {
+            Schema::table('contacts', function (Blueprint $table) {
+                $table->dropColumn('tel');
+            });
+        }
     }
 }
